@@ -2,6 +2,8 @@ node_modules
 
 dist
 
+elm-stuff
+
 .vscode
 
 package-lock.json

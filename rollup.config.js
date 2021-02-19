@@ -2,8 +2,8 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import babel from "@rollup/plugin-babel";
 import replace from "@rollup/plugin-replace";
-// import postcss from "rollup-plugin-postcss";
-// import pkg from "./package.json";
+import elm from "rollup-plugin-elm";
+import postcss from "rollup-plugin-postcss";
 
 const extensions = [".js", ".jsx"];
 
@@ -18,15 +18,21 @@ const options = {
         replace({
             'process.env.NODE_ENV': JSON.stringify("production")
         }),
+        elm({
+            exclude: "src/Elm/elm-stuff/**",
+            include: "src/Elm/Components/**",
+            compiler: {
+                pathToElm: "/usr/local/bin/elm"
+            }
+        }),
         babel({
             extensions,
             babelHelpers: "bundled",
             include: "src/**",
         }),
-        // postcss({
-        //     extract: true,
-        //     modules: true,
-        // }),
+        postcss({
+            extract: true,
+        }),
         resolve({ extensions }),
         commonjs(),
     ],
